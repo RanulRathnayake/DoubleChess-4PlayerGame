@@ -1,0 +1,8 @@
+# Screen dimensions
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
+
+ROWS = 8
+COLS = 8
+
+SQSIZE = SCREEN_WIDTH // COLS
