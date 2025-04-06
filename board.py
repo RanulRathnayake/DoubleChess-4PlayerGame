@@ -17,29 +17,24 @@ class Board:
         initial = move.initial
         final = move.final
 
-        # Move the piece on the board
         self.squares[initial.row][initial.col].piece = None
         self.squares[final.row][final.col].piece = piece
 
-        # Check for promotion
         if isinstance(piece, Pawn):
             self.check_promotion(piece, final)
 
-        # Handle castling
         if isinstance(piece, King):
             if self.castling(initial, final):
                 diff = final.col - initial.col
                 rook = piece.left_rook if (diff < 0) else piece.right_rook
 
-                # ✅ Safe check for rook existence and valid move
+
                 if rook and rook.moves:
                     self.move(rook, rook.moves[-1])
 
-        # Mark piece as moved and clear old moves
         piece.moved = True
         piece.clear_moves()
 
-        # Store last move
         self.last_move = move
 
     """def move(self, piece, move):
@@ -74,19 +69,15 @@ class Board:
         return abs(initial.col - final.col) == 2
 
     def in_check(self, piece, move):
-        # Make a copy of the board
         temp_board = copy.deepcopy(self)
 
-        # Get the piece reference from the board copy
         temp_piece = temp_board.squares[move.initial.row][move.initial.col].piece
 
         if not temp_piece:
-            return True  # Fail-safe: if the piece disappears, treat as invalid move
+            return True
 
-        # Simulate the move on the temp board
         temp_board.move(temp_piece, move)
 
-        # Find king's position after move
         king_pos = None
         for row in range(ROWS):
             for col in range(COLS):
@@ -98,9 +89,8 @@ class Board:
                 break
 
         if not king_pos:
-            return True  # King not found, must be in danger
+            return True
 
-        # Check if any enemy piece can attack the king
         for row in range(ROWS):
             for col in range(COLS):
                 square = temp_board.squares[row][col]
@@ -247,18 +237,14 @@ class Board:
                         else:
                             piece.add_move(move)
 
-            # Castling
             if not piece.moved:
-                # Only consider castling if king is not in check at current position
                 current_square = self.squares[row][col]
                 current_check = self.in_check(piece, Move(current_square, current_square))
                 if not current_check:
 
-                    # Queen-side castling
                     left_rook = self.squares[row][0].piece
                     if isinstance(left_rook, Rook) and not left_rook.moved:
                         if all(self.squares[row][c].is_empty() for c in range(1, 4)):
-                            # Squares king moves through: d1 (3), c1 (2)
                             move_through = Move(current_square, self.squares[row][3])
                             move_final = Move(current_square, self.squares[row][2])
                             if not self.in_check(piece, move_through) and not self.in_check(piece, move_final):
@@ -268,11 +254,9 @@ class Board:
                                 piece.add_move(moveK)
                                 left_rook.add_move(moveR)
 
-                    # King-side castling
                     right_rook = self.squares[row][7].piece
                     if isinstance(right_rook, Rook) and not right_rook.moved:
                         if all(self.squares[row][c].is_empty() for c in range(5, 7)):
-                            # Squares king moves through: f1 (5), g1 (6)
                             move_through = Move(current_square, self.squares[row][5])
                             move_final = Move(current_square, self.squares[row][6])
                             if not self.in_check(piece, move_through) and not self.in_check(piece, move_final):
