@@ -10,9 +10,16 @@ class Main:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("Two Chess Boards")
-        self.game1 = Game()
-        self.game2 = Game()
+        pygame.display.set_caption("Double Chess Boards")
+        self.game1 = Game(flip = False)
+        self.game2 = Game(flip = True)
+
+        for row in self.game2.board.squares:
+            for square in row:
+                if square.has_piece():
+                    piece = square.piece
+                    piece.color = 'white' if piece.color == 'black' else 'black'
+
 
     def mainloop(self):
         screen = self.screen

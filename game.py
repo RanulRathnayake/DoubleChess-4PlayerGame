@@ -7,20 +7,45 @@ from square import Square
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, flip = False):
         self.next_player = 'white'
         self.hovered_sqr = None
-        self.board = Board()
+        self.board = Board(flip = flip)
         self.dragger = Dragger()
         self.font = pygame.font.SysFont('monospace', 18, bold=True)
 
-
     def show_bg(self, surface, offset_x=0):
+        is_second_board = offset_x > 0  # Any non-zero offset means it's the second board
+
+        for row in range(ROWS):
+            for col in range(COLS):
+                # Square color
+                color = (234, 235, 200) if (row + col) % 2 == 0 else (119, 154, 88)
+                rect = (offset_x + col * SQSIZE, (row + 4) * SQSIZE, SQSIZE, SQSIZE)
+                pygame.draw.rect(surface, color, rect)
+
+                # Rank labels (numbers on left side)
+                if col == 0:
+                    text_color = (119, 154, 88) if row % 2 == 0 else (234, 235, 200)
+                    label_num = row + 1 if is_second_board else ROWS - row
+                    label = self.font.render(str(label_num), True, text_color)
+                    label_pos = (offset_x + 5, (row + 4) * SQSIZE + 5)
+                    surface.blit(label, label_pos)
+
+                # File labels (letters on bottom)
+                if row == 7:
+                    text_color = (119, 154, 88) if (row + col) % 2 == 0 else (234, 235, 200)
+                    label = self.font.render(Square.get_alphacol(col), True, text_color)
+                    label_pos = (offset_x + col * SQSIZE + SQSIZE - 20, SCREEN_HEIGHT - 20)
+                    surface.blit(label, label_pos)
+
+
+    """ def show_bg(self, surface, offset_x=0):
         for row in range(ROWS):
             for col in range(COLS):
                 color = (234, 235, 200) if (row + col) % 2 == 0 else (119, 154, 88)
                 rect = (offset_x + col * SQSIZE, (row + 4) * SQSIZE, SQSIZE, SQSIZE)
-                pygame.draw.rect(surface, color, rect)
+                pygame.draw.rect(surface, color, rect) """
 
 
     """ def show_bg(self, surface):
