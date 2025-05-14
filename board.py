@@ -301,3 +301,12 @@ class Board:
             self.squares[row_other][3] = Square(row_other, 3, King(color))
             self.squares[row_other][4] = Square(row_other, 4, Queen(color))
 
+    def add_captured_piece_to_board(self, piece, bottom=True):
+        # bottom player rows: row 6 or 7 (white), row 0 or 1 (black)
+        target_rows = [6, 7] if piece.color == 'white' else [0, 1] #there
+        for row in target_rows:
+            for col in range(COLS):
+                if self.squares[row][col].is_empty():
+                    self.squares[row][col].piece = piece
+                    return True
+        return False  # No space

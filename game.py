@@ -23,7 +23,7 @@ class Game:
         y = (2.9 * SQSIZE) if position == 'top' else (12 * SQSIZE) + 10
 
         # Which list to use
-        captured = self.captured_black if player_color == 'white' else self.captured_white
+        captured = self.captured_black if player_color == 'black' else self.captured_white
         count_by_type = Counter(type(p).__name__ for p in captured)
 
         grouped = {}

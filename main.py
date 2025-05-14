@@ -145,10 +145,22 @@ class Main:
                             if board.valid_move(dragger.piece, move):
                                 captured_piece = board.squares[final.row][final.col].piece
                                 if captured_piece:
-                                    if captured_piece.color == 'white':
-                                        game.captured_white.append(captured_piece)
+                                    piece_cls = type(captured_piece)
+                                    new_piece = piece_cls(captured_piece.color)
+                                    if game is game1:
+                                        if captured_piece.color == 'white':
+                                            game2.captured_white.append(captured_piece)
+                                            game2.board.add_captured_piece_to_board(new_piece, bottom=True)
+                                        else:
+                                            game2.captured_black.append(captured_piece)
+                                            game2.board.add_captured_piece_to_board(new_piece, bottom=True)
                                     else:
-                                        game.captured_black.append(captured_piece)
+                                        if captured_piece.color == 'white':
+                                            game1.captured_white.append(captured_piece)
+                                            game1.board.add_captured_piece_to_board(new_piece, bottom=True)
+                                        else:
+                                            game1.captured_black.append(captured_piece)
+                                            game1.board.add_captured_piece_to_board(new_piece, bottom=True)
 
                                 board.move(dragger.piece, move)
                                 game.next_turn()
