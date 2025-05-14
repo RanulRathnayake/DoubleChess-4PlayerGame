@@ -60,8 +60,8 @@ class Main:
             # show captured
             game1.show_captured(screen, offset_x=0, position='top', player_color='black')
             game1.show_captured(screen, offset_x=0, position='bottom', player_color='white')
-            game2.show_captured(screen, offset_x=8 * SQSIZE, position='top', player_color='black')
-            game2.show_captured(screen, offset_x=8 * SQSIZE, position='bottom', player_color='white')
+            game2.show_captured(screen, offset_x=8 * SQSIZE, position='top', player_color='white')
+            game2.show_captured(screen, offset_x=8 * SQSIZE, position='bottom', player_color='black')
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

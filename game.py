@@ -19,12 +19,8 @@ class Game:
         self.captured_black = []  # black pieces captured by white
 
     def show_captured(self, surface, offset_x=0, position='top', player_color='white'):
-        # Background rectangle
-        area_height = SQSIZE
-        area_width = SQSIZE * 8
+
         y = (2.9 * SQSIZE) if position == 'top' else (12 * SQSIZE) + 10
-        rect = pygame.Rect(offset_x, y, area_width, area_height)
-        pygame.draw.rect(surface, (187, 216, 163), rect, border_radius=6)
 
         # Which list to use
         captured = self.captured_black if player_color == 'white' else self.captured_white
@@ -52,6 +48,16 @@ class Game:
 
     def show_bg(self, surface, offset_x=0):
         is_second_board = offset_x > 0  # Any non-zero offset means it's the second board
+
+        area_height = SQSIZE
+        area_width = SQSIZE * 8
+        y = (2.9 * SQSIZE)
+        rect = pygame.Rect(offset_x, y, area_width, area_height)
+        pygame.draw.rect(surface, (187, 216, 163), rect, border_radius=6)
+
+        y = (12 * SQSIZE) + 10
+        rect = pygame.Rect(offset_x, y, area_width, area_height)
+        pygame.draw.rect(surface, (187, 216, 163), rect, border_radius=6)
 
         for row in range(ROWS):
             for col in range(COLS):
