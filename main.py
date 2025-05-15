@@ -150,17 +150,17 @@ class Main:
                                     if game is game1:
                                         if captured_piece.color == 'white':
                                             game2.captured_white.append(captured_piece)
-                                            game2.board.add_captured_piece_to_board(new_piece, bottom=True)
+                                            game2.board.add_captured_piece_to_board(new_piece, 2)
                                         else:
                                             game2.captured_black.append(captured_piece)
-                                            game2.board.add_captured_piece_to_board(new_piece, bottom=True)
+                                            game2.board.add_captured_piece_to_board(new_piece, 2)
                                     else:
                                         if captured_piece.color == 'white':
                                             game1.captured_white.append(captured_piece)
-                                            game1.board.add_captured_piece_to_board(new_piece, bottom=True)
+                                            game1.board.add_captured_piece_to_board(new_piece, 1)
                                         else:
                                             game1.captured_black.append(captured_piece)
-                                            game1.board.add_captured_piece_to_board(new_piece, bottom=True)
+                                            game1.board.add_captured_piece_to_board(new_piece, 1)
 
                                 board.move(dragger.piece, move)
                                 game.next_turn()
