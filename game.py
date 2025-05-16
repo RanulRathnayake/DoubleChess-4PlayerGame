@@ -17,12 +17,16 @@ class Game:
         self.font = pygame.font.SysFont('monospace', 18, bold=True)
         self.captured_white = []
         self.captured_black = []
+        self.captured_white_rects = []
+        self.captured_black_rects = []
 
     def show_captured(self, surface, offset_x=0, position='top', player_color='white'):
 
         y = (2.9 * SQSIZE) if position == 'top' else (12 * SQSIZE) + 10
 
         captured = self.captured_black if player_color == 'black' else self.captured_white
+        rect_list = self.captured_black_rects if player_color == 'black' else self.captured_white_rects
+        rect_list.clear()
         count_by_type = Counter(type(p).__name__ for p in captured)
 
         grouped = {}
@@ -38,6 +42,8 @@ class Game:
             img = pygame.image.load(piece.texture)
             img_rect = img.get_rect(topleft=(x, y + 1))
             surface.blit(img, img_rect)
+
+            rect_list.append((img_rect, piece))
 
             if count > 1:
                 label = self.font.render(f"x{count}", True, (63, 125, 88))
