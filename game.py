@@ -15,14 +15,13 @@ class Game:
         self.board = Board(flip = flip)
         self.dragger = Dragger()
         self.font = pygame.font.SysFont('monospace', 18, bold=True)
-        self.captured_white = []  # white pieces captured by black
-        self.captured_black = []  # black pieces captured by white
+        self.captured_white = []
+        self.captured_black = []
 
     def show_captured(self, surface, offset_x=0, position='top', player_color='white'):
 
         y = (2.9 * SQSIZE) if position == 'top' else (12 * SQSIZE) + 10
 
-        # Which list to use
         captured = self.captured_black if player_color == 'black' else self.captured_white
         count_by_type = Counter(type(p).__name__ for p in captured)
 
@@ -30,7 +29,7 @@ class Game:
         for piece in captured:
             name = type(piece).__name__
             if name not in grouped:
-                grouped[name] = (piece, count_by_type[name])  # one of each type
+                grouped[name] = (piece, count_by_type[name])
 
         # Draw each group
         x = offset_x + 10
@@ -44,10 +43,10 @@ class Game:
                 label = self.font.render(f"x{count}", True, (63, 125, 88))
                 surface.blit(label, (x + 1, y + 5))
 
-            x += 100  # spacing between groups
+            x += 100
 
     def show_bg(self, surface, offset_x=0):
-        is_second_board = offset_x > 0  # Any non-zero offset means it's the second board
+        is_second_board = offset_x > 0
 
         area_height = SQSIZE
         area_width = SQSIZE * 8

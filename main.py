@@ -58,11 +58,12 @@ class Main:
             pygame.draw.line(screen, (0, 0, 0), (line_x, 4 * SQSIZE), (line_x, (4 + ROWS) * SQSIZE), 4)
 
             # show captured
+            """
             game1.show_captured(screen, offset_x=0, position='top', player_color='black')
             game1.show_captured(screen, offset_x=0, position='bottom', player_color='white')
             game2.show_captured(screen, offset_x=8 * SQSIZE, position='top', player_color='white')
             game2.show_captured(screen, offset_x=8 * SQSIZE, position='bottom', player_color='black')
-
+            """
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
