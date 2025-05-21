@@ -56,8 +56,6 @@ class Main:
 
             line_x = 8 * SQSIZE
             pygame.draw.line(screen, (0, 0, 0), (line_x, 4 * SQSIZE), (line_x, (4 + ROWS) * SQSIZE), 4)
-
-            # show captured
             
             game1.show_captured(screen, offset_x=0, position='top', player_color='black')
             game1.show_captured(screen, offset_x=0, position='bottom', player_color='white')
@@ -74,17 +72,19 @@ class Main:
 
                     for rect, piece in game1.captured_white_rects + game1.captured_black_rects:
                         if rect.collidepoint(x, y):
-                            dragger1.piece = piece
-                            dragger1.dragging = True
-                            dragger1.mouseX, dragger1.mouseY = x, y
-                            break
+                            if piece.color == game1.next_player:
+                                dragger1.piece = piece
+                                dragger1.dragging = True
+                                dragger1.mouseX, dragger1.mouseY = x, y
+                                break
 
                     for rect, piece in game2.captured_white_rects + game2.captured_black_rects:
                         if rect.collidepoint(x, y):
-                            dragger2.piece = piece
-                            dragger2.dragging = True
-                            dragger2.mouseX, dragger2.mouseY = x, y
-                            break
+                            if piece.color == game2.next_player:
+                                dragger2.piece = piece
+                                dragger2.dragging = True
+                                dragger2.mouseX, dragger2.mouseY = x, y
+                                break
 
                     col = x // SQSIZE
                     row = y // SQSIZE - 4
@@ -165,6 +165,11 @@ class Main:
                                 if not target_square.has_piece():
                                     target_square.piece = dragger.piece
 
+                                    if game is game1:
+                                        dragger.piece.dir = -1 if dragger.piece.color == 'white' else 1
+                                    else:
+                                        dragger.piece.dir = 1 if dragger.piece.color == 'white' else -1
+
                                     if dragger.piece.color == 'white':
                                         if dragger.piece in game.captured_white:
                                             game.captured_white.remove(dragger.piece)
@@ -190,17 +195,13 @@ class Main:
                                         if game is game1:
                                             if captured_piece.color == 'white':
                                                 game2.captured_white.append(captured_piece)
-                                                #game2.board.add_captured_piece_to_board(new_piece, 2)
                                             else:
                                                 game2.captured_black.append(captured_piece)
-                                                #game2.board.add_captured_piece_to_board(new_piece, 2)
                                         else:
                                             if captured_piece.color == 'white':
                                                 game1.captured_white.append(captured_piece)
-                                                #game1.board.add_captured_piece_to_board(new_piece, 1)
                                             else:
                                                 game1.captured_black.append(captured_piece)
-                                                #game1.board.add_captured_piece_to_board(new_piece, 1)
 
                                     board.move(dragger.piece, move)
                                     game.next_turn()
