@@ -87,7 +87,7 @@ class Main:
                                 break
 
                     col = x // SQSIZE
-                    row = y // SQSIZE - 4
+                    row = y // SQSIZE - 1
 
                     if 0 <= row < 8:
                         if 0 <= col < 8:
@@ -116,7 +116,7 @@ class Main:
                 elif event.type == pygame.MOUSEMOTION:
                     x, y = event.pos
                     col = x // SQSIZE
-                    row = y // SQSIZE - 4
+                    row = y // SQSIZE - 1
 
                     if 0 <= row < 8:
                         if 0 <= col < 8:
@@ -132,7 +132,7 @@ class Main:
 
                     x, y = event.pos
                     col = x // SQSIZE
-                    row = y // SQSIZE - 4
+                    row = y // SQSIZE - 1
 
                     if 0 <= row < 8:
                         if 0 <= col < 8:
@@ -151,7 +151,7 @@ class Main:
 
                         if dragger.dragging:
                             dragger.update_mouse(event.pos)
-                            released_row = dragger.mouseY // SQSIZE - 4
+                            released_row = dragger.mouseY // SQSIZE - 1
                             released_col = (dragger.mouseX // SQSIZE) - (8 if col >= 8 else 0)
 
                             is_captured_piece = True

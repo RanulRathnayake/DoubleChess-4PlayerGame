@@ -22,7 +22,7 @@ class Game:
 
     def show_captured(self, surface, offset_x=0, position='top', player_color='white'):
 
-        y = (2.9 * SQSIZE) if position == 'top' else (12 * SQSIZE) + 10
+        y = 0.05 if position == 'top' else (9.05 * SQSIZE) + 10
 
         captured = self.captured_black if player_color == 'black' else self.captured_white
         rect_list = self.captured_black_rects if player_color == 'black' else self.captured_white_rects
@@ -56,11 +56,11 @@ class Game:
 
         area_height = SQSIZE
         area_width = SQSIZE * 8
-        y = (2.9 * SQSIZE)
+        y = 0.05
         rect = pygame.Rect(offset_x, y, area_width, area_height)
         pygame.draw.rect(surface, (187, 216, 163), rect, border_radius=6)
 
-        y = (12 * SQSIZE) + 10
+        y = (9.05 * SQSIZE) + 10
         rect = pygame.Rect(offset_x, y, area_width, area_height)
         pygame.draw.rect(surface, (187, 216, 163), rect, border_radius=6)
 
@@ -68,7 +68,7 @@ class Game:
             for col in range(COLS):
                 # Square color
                 color = (234, 235, 200) if (row + col) % 2 == 0 else (119, 154, 88)
-                rect = (offset_x + col * SQSIZE, (row + 4) * SQSIZE, SQSIZE, SQSIZE)
+                rect = (offset_x + col * SQSIZE, (row + 1.1) * SQSIZE, SQSIZE, SQSIZE)
                 pygame.draw.rect(surface, color, rect)
 
                 # Rank labels (numbers on left side)
@@ -76,14 +76,14 @@ class Game:
                     text_color = (119, 154, 88) if row % 2 == 0 else (234, 235, 200)
                     label_num = row + 1 if is_second_board else ROWS - row
                     label = self.font.render(str(label_num), True, text_color)
-                    label_pos = (offset_x + 5, (row + 4) * SQSIZE + 5)
+                    label_pos = (offset_x + 5, (row + 1.1) * SQSIZE + 5)
                     surface.blit(label, label_pos)
 
                 # File labels (letters on bottom)
                 if row == 7:
                     text_color = (119, 154, 88) if (row + col) % 2 == 0 else (234, 235, 200)
                     label = self.font.render(Square.get_alphacol(col), True, text_color)
-                    label_pos = (offset_x + col * SQSIZE + 2, (row + 4) * SQSIZE + 60)
+                    label_pos = (offset_x + col * SQSIZE + 2, (row + 1.1) * SQSIZE + 60)
                     surface.blit(label, label_pos)
 
     def show_pieces(self, surface, offset_x=0):
@@ -94,7 +94,7 @@ class Game:
                     if piece is not self.dragger.piece:
                         piece.set_texture(size=80)
                         img = pygame.image.load(piece.texture)
-                        img_center = (offset_x + col * SQSIZE + SQSIZE // 2, (row + 4) * SQSIZE + SQSIZE // 2)
+                        img_center = (offset_x + col * SQSIZE + SQSIZE // 2, (row + 1.1) * SQSIZE + SQSIZE // 2)
                         piece.texture_rect = img.get_rect(center=img_center)
                         surface.blit(img, piece.texture_rect)
 
@@ -103,7 +103,7 @@ class Game:
             piece = self.dragger.piece
             for move in piece.moves:
                 color = '#C86464' if (move.final.row + move.final.col) % 2 == 0 else '#C84646'
-                rect = (offset_x + move.final.col * SQSIZE, (move.final.row + 4) * SQSIZE, SQSIZE, SQSIZE)
+                rect = (offset_x + move.final.col * SQSIZE, (move.final.row + 1.1) * SQSIZE, SQSIZE, SQSIZE)
                 pygame.draw.rect(surface, color, rect)
 
     def show_last_move(self, surface, offset_x=0):
@@ -113,13 +113,13 @@ class Game:
 
             for pos in [initial, final]:
                 color = (244, 247, 116) if (pos.row + pos.col) % 2 == 0 else (172, 195, 51)
-                rect = (offset_x + pos.col * SQSIZE, (pos.row + 4) * SQSIZE, SQSIZE, SQSIZE)
+                rect = (offset_x + pos.col * SQSIZE, (pos.row + 1.1) * SQSIZE, SQSIZE, SQSIZE)
                 pygame.draw.rect(surface, color, rect)
 
     def show_hover(self, surface, offset_x=0):
         if self.hovered_sqr:
             color = (180, 180, 180)
-            rect = (offset_x + self.hovered_sqr.col * SQSIZE, (self.hovered_sqr.row + 4) * SQSIZE, SQSIZE, SQSIZE)
+            rect = (offset_x + self.hovered_sqr.col * SQSIZE, (self.hovered_sqr.row + 1.1) * SQSIZE, SQSIZE, SQSIZE)
             pygame.draw.rect(surface, color, rect, width=3)
 
     def next_turn(self):
