@@ -14,7 +14,7 @@ class Dragger:
     
     def save_initial(self, pos, offset_x=0):
         x, y = pos
-        self.initial_row = y // SQSIZE - 4
+        self.initial_row = y // SQSIZE - 1
         self.initial_col = (x - offset_x) // SQSIZE
 
     def drag_piece(self, piece):
