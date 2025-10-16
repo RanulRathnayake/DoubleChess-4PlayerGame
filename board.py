@@ -314,3 +314,18 @@ class Board:
                     self.squares[row][col].piece = piece
                     return True
         return False  # No space """
+
+    def get_king_in_check_square(self, color):
+        """
+        Returns the Square object of the king if it is in check, else None
+        """
+        for row in range(ROWS):
+            for col in range(COLS):
+                square = self.squares[row][col]
+                if isinstance(square.piece, King) and square.piece.color == color:
+                    king = square.piece
+                    # Create a temporary move to check if king is under attack
+                    move = Move(square, square)
+                    if self.in_check(king, move):
+                        return square
+        return None
