@@ -55,7 +55,7 @@ class Main:
                 dragger2.update_blit(screen, offset_x=8 * SQSIZE)
 
             line_x = 8 * SQSIZE
-            pygame.draw.line(screen, (0, 0, 0), (line_x, 4 * SQSIZE), (line_x, (4 + ROWS) * SQSIZE), 4)
+            pygame.draw.line(screen, (0, 0, 0), (line_x, 0), (line_x, (4 + ROWS) * SQSIZE), 4)
             
             game1.show_captured(screen, offset_x=0, position='top', player_color='black')
             game1.show_captured(screen, offset_x=0, position='bottom', player_color='white')
@@ -112,6 +112,7 @@ class Main:
                                 board.calc_moves(piece, row, actual_col, bool=True)
                                 dragger.save_initial(event.pos, offset_x)
                                 dragger.drag_piece(piece)
+                                dragger.update_mouse(event.pos)
 
                 elif event.type == pygame.MOUSEMOTION:
                     x, y = event.pos

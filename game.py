@@ -85,6 +85,13 @@ class Game:
                     label = self.font.render(Square.get_alphacol(col), True, text_color)
                     label_pos = (offset_x + col * SQSIZE + 2, (row + 1.1) * SQSIZE + 60)
                     surface.blit(label, label_pos)
+        # ==== Highlight kings in check ====
+        for color in ['white', 'black']:
+            king_square = self.board.get_king_in_check_square(color)
+            if king_square:
+                row, col = king_square.row, king_square.col
+                rect = pygame.Rect(offset_x + col * SQSIZE, (row + 1.1) * SQSIZE, SQSIZE, SQSIZE)
+                pygame.draw.rect(surface, '#C84646', rect )
 
     def show_pieces(self, surface, offset_x=0):
         for row in range(ROWS):
